@@ -1,1 +1,8 @@
-//omfg css 
+@media only screen and (min-width : 1201px) {
+	/* "How the customer explained it" */ 
+    .software {
+    	width: 128px;
+    	height: 240px;
+    	background: url(software.png) 0 0px;
+    }
+}
