@@ -1,8 +1,89 @@
-@media only screen and (min-width : 1201px) {
+@media only screen and (min-width: 1201px) {
 	/* "How the customer explained it" */ 
     .software {
     	width: 128px;
     	height: 240px;
-    	background: url(software.png) 0 0px;
+    	background: url(software.png) -6px 0px;
+    }
+}
+
+@media only screen and (min-width: 1101px) and (max-width: 1200px) {
+	/* "How the Project Leader understood it" */ 
+    .software {
+    	width: 128px;
+    	height: 240px;
+    	background: url(software.png) -132px 0px;
+    }
+}
+
+@media only screen and (min-width: 1001px) and (max-width: 1100px) {
+	/* "How the Analyst designed it" */ 
+    .software {
+    	width: 128px;
+    	height: 240px;
+    	background: url(software.png) -258px 0px;
+    }
+}
+
+@media only screen and (min-width: 901px) and (max-width: 1000px) {
+	/* "How the Programmer..." */ 
+    .software {
+    	width: 128px;
+    	height: 240px;
+    	background: url(software.png) -384px 0px;
+    }
+}
+
+@media only screen and (min-width: 801px) and (max-width: 900px) {
+	/* "How the Business Consultant..." */ 
+    .software {
+    	width: 128px;
+    	height: 240px;
+    	background: url(software.png) -510px 0px;
+    }
+}
+
+@media only screen and (min-width: 701px) and (max-width: 800px) {
+	/* "How the Project..." */ 
+    .software {
+    	width: 128px;
+    	height: 240px;
+    	background: url(software.png) -6px -240px;
+    }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 700px) {
+	/* "What Operations..." */ 
+    .software {
+    	width: 128px;
+    	height: 240px;
+    	background: url(software.png) -132px -240px;
+    }
+}
+
+@media only screen and (min-width: 501px) and (max-width: 600px) {
+	/* "How the Customer..." */ 
+    .software {
+    	width: 128px;
+    	height: 240px;
+    	background: url(software.png) -258px -240px;
+    }
+}
+
+@media only screen and (min-width: 401px) and (max-width: 500px) {
+	/* "How it was Supported..." */ 
+    .software {
+    	width: 128px;
+    	height: 240px;
+    	background: url(software.png) -384px -240px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+	/* "What the Customer..." */ 
+    .software {
+    	width: 128px;
+    	height: 240px;
+    	background: url(software.png) -510px -240px;
     }
 }
