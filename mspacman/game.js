@@ -9,6 +9,8 @@ function init() {
 
 	// Draw Pac-Woman
 	img.onload = function() {
-		ctx.drawImage(img, 319, 0, 795 - 329, 244 - 106, 0, 0, 795 - 329, 244 - 106);
+		ctx.drawImage(img, 319, 0, 466, 138, 400 - 233, 0, 795 - 329, 244 - 106);
+		ctx.drawImage(img, 80, 20, 15, 15, 400 - 180, 30, 15, 15)
 	}
 }
+122 - 102
