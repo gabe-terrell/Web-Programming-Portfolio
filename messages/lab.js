@@ -4,8 +4,9 @@ function parseData() {
 		messagesDiv = document.getElementById("messages");
 		converted = JSON.parse(request.responseText);
 		for (i = 0; i < converted.length; i++) {
-			messagesDiv.innterHTML += "<p>" + converted[i]['content'] + "</p>";
+			messagesDiv.innerHTML += "<p>  " + converted[i]['content'] + "</p>";
 		}
+	}
 }
 
 function parse() {
@@ -20,6 +21,6 @@ function parse() {
 	// Step 3 - Set up way to manage response (with a function)
 	request.onreadystatechange = parseData;
 
-	// Step 4 - 
+	// Step 4 - Execute the request
 	request.send();
 }
