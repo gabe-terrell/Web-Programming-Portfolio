@@ -4,7 +4,6 @@ function parseData() {
 		messagesDiv = document.getElementById("messages");
 		converted = JSON.parse(request.responseText);
 		for (i = 0; i < converted.length; i++) {
-			console.log(converted[i]['content']);
 			messagesDiv.innterHTML += "<p>" + converted[i]['content'] + "</p>";
 		}
 }
