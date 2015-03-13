@@ -70,8 +70,7 @@
 				}
 			}
 
-			function renderMap()
-			{
+			function renderMap() {
 				me = new google.maps.LatLng(myLat, myLng);
 				
 				// Update map and go there...
@@ -90,8 +89,6 @@
 					infowindow.open(map, marker);
 				});
 
-				markers = new Array(converted.length);
-
 				// Add other students to the map
 				for (i = 0; i < converted.length; i++) {
 					// Don't add user to the map again
@@ -105,19 +102,7 @@
 					var loc = new google.maps.LatLng(lat, lng);
 
 					// create marker
-					markers[i] = new google.maps.Marker({
-						position: loc,
-						title: converted[i]['login']
-					});
-					markers[i].setMap(map);
-
-					console.log(markers[i]);
-
-					// Open info window on click of marker
-					google.maps.event.addListener(markers[i], 'click', function() {
-						infowindow.setContent(markers[i].title);
-						infowindow.open(map, markers[i]);
-					});
+					createMarker(loc, converted[i]['login'])
 				}
 				
 				// Calling Google Places API
@@ -131,8 +116,7 @@
 			}
 			
 			// Taken from http://code.google.com/apis/maps/documentation/javascript/places.html
-			function callback(results, status)
-			{
+			function callback(results, status) {
 				if (status == google.maps.places.PlacesServiceStatus.OK) {
 					alert("Got places back!");
 					places = results;
@@ -142,20 +126,23 @@
 				}
 			}
 			
-			function createMarker(place)
-			{
-				var placeLoc = place.geometry.location;
-				var marker = new google.maps.Marker({
+			function createMarker(loc, name) {
+				console.log(loc + " -----> " + name);
+				var mark = new google.maps.Marker({
 					map: map,
-					position: place.geometry.location
+					position: loc,
+					title: name
 				});
-
-				google.maps.event.addListener(marker, 'click', function() {
+				
+				//mark.setMap(map);
+				
+				// Open info window on click of marker
+				google.maps.event.addListener(mark, 'click', function() {
 					infowindow.close();
-					infowindow.setContent(place.name);
-					infowindow.open(map, this);
+					infowindow.setContent(mark.title);
+					infowindow.open(map, mark);
 				});
-      }
+      		}
 		</script>
 	</head>
 	
