@@ -3,7 +3,7 @@
 <html>
 
 	<head>
-		<title>Geolocation Map Example</title>
+		<title> Marauder's Map </title>
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=places"></script>
 		<link rel="stylesheet" href="style.css" />
@@ -11,17 +11,18 @@
 		<script>
 			var myLat = 0;
 			var myLng = 0;
-			var me = new google.maps.LatLng(myLat, myLng);
+			var me;
 			var myOptions = {
-						zoom: 13, // The larger the zoom number, the bigger the zoom
+						zoom: 18, // The larger the zoom number, the bigger the zoom
 						center: me,
-						mapTypeId: google.maps.MapTypeId.ROADMAP
+						mapTypeId: google.maps.MapTypeId.HYBRID
 					};
 			var map;
 			var marker;
 			var infowindow = new google.maps.InfoWindow();
 			var places;
 			
+			// Creates new map and attempts to find user's location
 			function init()
 			{
 				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
@@ -29,6 +30,7 @@
 			}
 			
 			// uses geolocation navigator to find user's latitude and longitude
+			// code mostly borrowed from Ming's example
 			function getMyLocation() {
 				// checks if browser supports geolocation
 				if (navigator.geolocation) { 
@@ -87,8 +89,9 @@
 				// Adding custom icon image for user
 				// Source: http://stackoverflow.com/questions/2472957
 				var icon = new google.maps.MarkerImage(
+					// Image Source: http://bit.ly/18jgRGa
 				    "/here.png", null, null, null,
-				    new google.maps.Size(42, 68));  
+				    new google.maps.Size(42 * .9, 68 * .9));  
 				marker.setIcon(icon);
 					
 				// Open info window on click of marker
