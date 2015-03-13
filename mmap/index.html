@@ -11,7 +11,6 @@
 		<script>
 			var myLat = 0;
 			var myLng = 0;
-			var request = new XMLHttpRequest();
 			var me = new google.maps.LatLng(myLat, myLng);
 			var myOptions = {
 						zoom: 13, // The larger the zoom number, the bigger the zoom
@@ -26,24 +25,51 @@
 			function init()
 			{
 				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-				console.log("Call before getMyLocation()");
 				getMyLocation();
-				console.log("Call after getMyLocation()");
+				
+
 			}
 			
+			// uses geolocation navigator to find user's latitude and longitude
 			function getMyLocation() {
-				console.log("In getMyLocation()");
-				if (navigator.geolocation) { // the navigator.geolocation object is supported on your browser
+				// checks if browser supports geolocation
+				if (navigator.geolocation) { 
+					// finds user's latitude and longitude the
 					navigator.geolocation.getCurrentPosition(function(position) {
 						myLat = position.coords.latitude;
 						myLng = position.coords.longitude;
-						renderMap();
+						sendMyLocation();
 					});
 				}
+				// sends suitable error message if geolocation is disabled
 				else {
-					alert("Geolocation is not supported by your web browser.  What a shame!");
+					alert("Geolocation is not supported by this web browser.");
 				}
-				console.log("Leaving getMyLocation()");
+			}
+
+			// Sends an XMLHTTPRequest (XHR) to Ming's webpage with my location
+			// Should receive a JSON with all of the locations to be put
+			// onto the map
+			function sendMyLocation() {
+				// data to be sent
+				xhrParams = "login=BenKinsey&lat=" + myLat + "&lng=" + myLng;
+
+				// Setting up XHR
+				xhr = new XMLHttpRequest();
+				xhr.open("POST", "https://secret-about-box.herokuapp.com/sendLocation", true);
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.onreadystatechange = parseData;
+				xhr.send(xhrParams);
+			}
+
+			function parseData() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					converted = JSON.parse(xhr.responseText);
+					console.log(converted);
+					for (i = 0; i < converted.length; i++) {
+					}
+					renderMap();
+				}
 			}
 
 			function renderMap()
