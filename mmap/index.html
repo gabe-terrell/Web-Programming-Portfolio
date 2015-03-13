@@ -60,26 +60,36 @@
 				xhr.send(xhrParams);
 			}
 
+			// If XHR request is succesful, parse JSON and render map.
 			function parseData() {
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					converted = JSON.parse(xhr.responseText);
-					console.log(converted);
 					renderMap();
 				}
 			}
 
+			// Upon successful XHR data reception, render's google map
+			// with location of user and other students sent from XHR.
 			function renderMap() {
+				// Create user's location
 				me = new google.maps.LatLng(myLat, myLng);
 				
-				// Update map and go there...
+				// Pan map to user location
 				map.panTo(me);
 	
 				// Create a marker
 				marker = new google.maps.Marker({
+					map: map,
 					position: me,
 					title: "BenKinsey"
 				});
-				marker.setMap(map);
+
+				// Adding custom icon image for user
+				// Source: http://stackoverflow.com/questions/2472957
+				var icon = new google.maps.MarkerImage(
+				    "/here.png", null, null, null,
+				    new google.maps.Size(42, 68));  
+				marker.setIcon(icon);
 					
 				// Open info window on click of marker
 				google.maps.event.addListener(marker, 'click', function() {
@@ -103,15 +113,18 @@
 				}
 			}
 			
+			// Given a student's latitude, longitude, and name
+			// Creates a new marker for that student and puts on map
 			function createMarker(lat, lng, name) {
 				//create location
 				var loc = new google.maps.LatLng(lat, lng);
 
 				// find distance between marker and user
 				var dist = distance(myLat, myLng, lat, lng)
-				// distance to 3 decimal places
+				// round distance to 3 decimal places
 				dist = Math.round(dist * 1000) / 1000
 
+				// create new marker
 				var mark = new google.maps.Marker({
 					map: map,
 					position: loc,
@@ -131,8 +144,7 @@
       		// Uses the Haversine formula: 
       		// http://www.movable-type.co.uk/scripts/latlong.html
       		// Code borrowed from: 
-      		// http://stackoverflow.com/questions/14560999/using-the-haversine-
-      		// formula-in-javascript (http://bit.ly/1goDPIX)
+      		// http://stackoverflow.com/questions/14560999/  
       		function distance (lat1, lon1, lat2, lon2) {
       			Number.prototype.toRad = function() {
       			   return this * Math.PI / 180;
@@ -144,8 +156,8 @@
       			var x2 = lon2-lon1;
       			var dLon = x2.toRad();  
       			var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
-      			                Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
-      			                Math.sin(dLon/2) * Math.sin(dLon/2);  
+      			        Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
+      			        Math.sin(dLon/2) * Math.sin(dLon/2);  
       			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
       			var d = R * c; 
 
