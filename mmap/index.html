@@ -2,16 +2,174 @@
 
 <html>
 
-<head>
-	<meta charset="utf-8" />
-	<title>Marauder's Map</title>
-	<script src="map.js"></script>
-	<link rel="stylesheet" href="style.css" type="text/css" />
-</head>
+	<head>
+		<title> Marauder's Map </title>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true&amp;libraries=places"></script>
+		<link rel="stylesheet" href="style.css" />
+		
+		<script>
+			var myLat = 0;
+			var myLng = 0;
+			var me;
+			var myOptions = {
+						zoom: 18, // The larger the zoom number, the bigger the zoom
+						center: me,
+						mapTypeId: google.maps.MapTypeId.HYBRID
+					};
+			var map;
+			var marker;
+			var infowindow = new google.maps.InfoWindow();
+			var places;
+			
+			// Creates new map and attempts to find user's location
+			function init()
+			{
+				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+				getMyLocation();
+			}
+			
+			// uses geolocation navigator to find user's latitude and longitude
+			// code mostly borrowed from Ming's example
+			function getMyLocation() {
+				// checks if browser supports geolocation
+				if (navigator.geolocation) { 
+					// finds user's latitude and longitude the
+					navigator.geolocation.getCurrentPosition(function(position) {
+						myLat = position.coords.latitude;
+						myLng = position.coords.longitude;
+						sendMyLocation();
+					});
+				}
+				// sends suitable error message if geolocation is disabled
+				else {
+					alert("Geolocation is not supported by this web browser.");
+				}
+			}
 
-<body onload="parse()">
-	<h1>Messages</h1>
-	<div id="messages"></div>
-</body>
+			// Sends an XMLHTTPRequest (XHR) to Ming's webpage with my location
+			// Should receive a JSON with all of the locations to be put
+			// onto the map
+			function sendMyLocation() {
+				// data to be sent
+				xhrParams = "login=BenKinsey&lat=" + myLat + "&lng=" + myLng;
 
+				// Setting up XHR
+				xhr = new XMLHttpRequest();
+				xhr.open("POST", "https://secret-about-box.herokuapp.com/sendLocation", true);
+				xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xhr.onreadystatechange = parseData;
+				xhr.send(xhrParams);
+			}
+
+			// If XHR request is succesful, parse JSON and render map.
+			function parseData() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					converted = JSON.parse(xhr.responseText);
+					renderMap();
+				}
+			}
+
+			// Upon successful XHR data reception, render's google map
+			// with location of user and other students sent from XHR.
+			function renderMap() {
+				// Create user's location
+				me = new google.maps.LatLng(myLat, myLng);
+				
+				// Pan map to user location
+				map.panTo(me);
+	
+				// Create a marker
+				marker = new google.maps.Marker({
+					map: map,
+					position: me,
+					title: "BenKinsey"
+				});
+
+				// Adding custom icon image for user
+				// Source: http://stackoverflow.com/questions/2472957
+				var icon = new google.maps.MarkerImage(
+					// Image Source: http://bit.ly/18jgRGa
+				    "/here.png", null, null, null,
+				    new google.maps.Size(42 * .9, 68 * .9));  
+				marker.setIcon(icon);
+					
+				// Open info window on click of marker
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.setContent(marker.title);
+					infowindow.open(map, marker);
+				});
+
+				// Add other students to the map
+				for (i = 0; i < converted.length; i++) {
+					// Don't add user to the map again
+					if (converted[i]['login'] === "BenKinsey") {
+						continue;
+					}
+
+					// create location
+					var lat = converted[i]['lat']
+					var lng = converted[i]['lng']
+
+					// create marker
+					createMarker(lat, lng, converted[i]['login'])
+				}
+			}
+			
+			// Given a student's latitude, longitude, and name
+			// Creates a new marker for that student and puts on map
+			function createMarker(lat, lng, name) {
+				//create location
+				var loc = new google.maps.LatLng(lat, lng);
+
+				// find distance between marker and user
+				var dist = distance(myLat, myLng, lat, lng)
+				// round distance to 3 decimal places
+				dist = Math.round(dist * 1000) / 1000
+
+				// create new marker
+				var mark = new google.maps.Marker({
+					map: map,
+					position: loc,
+					title: name + " -- " + dist + " miles away"
+				});
+								
+				// Open info window on click of marker
+				google.maps.event.addListener(mark, 'click', function() {
+					infowindow.close();
+					infowindow.setContent(mark.title);
+					infowindow.open(map, mark);
+				});
+      		}
+
+      		// Given two pairs of lat,lon coordinates, returns the distance
+      		// between the two pairs in miles
+      		// Uses the Haversine formula: 
+      		// http://www.movable-type.co.uk/scripts/latlong.html
+      		// Code borrowed from: 
+      		// http://stackoverflow.com/questions/14560999/  
+      		function distance (lat1, lon1, lat2, lon2) {
+      			Number.prototype.toRad = function() {
+      			   return this * Math.PI / 180;
+      			}
+
+      			var R = 3959; // miles
+      			var x1 = lat2-lat1;
+      			var dLat = x1.toRad();  
+      			var x2 = lon2-lon1;
+      			var dLon = x2.toRad();  
+      			var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+      			        Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
+      			        Math.sin(dLon/2) * Math.sin(dLon/2);  
+      			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      			var d = R * c; 
+
+      			return d;
+      		}
+		</script>
+	</head>
+	
+	<body onload="init()">
+		<div id="map_canvas"></div>
+	</body>
 </html>
