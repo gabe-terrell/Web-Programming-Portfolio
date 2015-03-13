@@ -66,8 +66,6 @@
 				if (xhr.readyState == 4 && xhr.status == 200) {
 					converted = JSON.parse(xhr.responseText);
 					console.log(converted);
-					for (i = 0; i < converted.length; i++) {
-					}
 					renderMap();
 				}
 			}
@@ -91,6 +89,36 @@
 					infowindow.setContent(marker.title);
 					infowindow.open(map, marker);
 				});
+
+				markers = new Array(converted.length);
+
+				// Add other students to the map
+				for (i = 0; i < converted.length; i++) {
+					// Don't add user to the map again
+					if (converted[i]['login'] === "BenKinsey") {
+						continue;
+					}
+
+					// create location
+					var lat = converted[i]['lat']
+					var lng = converted[i]['lng']
+					var loc = new google.maps.LatLng(lat, lng);
+
+					// create marker
+					markers[i] = new google.maps.Marker({
+						position: loc,
+						title: converted[i]['login']
+					});
+					markers[i].setMap(map);
+
+					console.log(markers[i]);
+
+					// Open info window on click of marker
+					google.maps.event.addListener(markers[i], 'click', function() {
+						infowindow.setContent(markers[i].title);
+						infowindow.open(map, markers[i]);
+					});
+				}
 				
 				// Calling Google Places API
 				 // var request = {
