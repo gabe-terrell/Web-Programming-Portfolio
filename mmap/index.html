@@ -26,8 +26,6 @@
 			{
 				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 				getMyLocation();
-				
-
 			}
 			
 			// uses geolocation navigator to find user's latitude and longitude
@@ -99,49 +97,59 @@
 					// create location
 					var lat = converted[i]['lat']
 					var lng = converted[i]['lng']
-					var loc = new google.maps.LatLng(lat, lng);
 
 					// create marker
-					createMarker(loc, converted[i]['login'])
-				}
-				
-				// Calling Google Places API
-				 // var request = {
-				 // 	location: me,
-				 // 	radius: '500',
-				 // 	types: ['food']
-				 // };
-				 // service = new google.maps.places.PlacesService(map);
-				 // service.search(request, callback);
-			}
-			
-			// Taken from http://code.google.com/apis/maps/documentation/javascript/places.html
-			function callback(results, status) {
-				if (status == google.maps.places.PlacesServiceStatus.OK) {
-					alert("Got places back!");
-					places = results;
-					for (var i = 0; i < results.length; i++) {
-						createMarker(results[i]);
-					}
+					createMarker(lat, lng, converted[i]['login'])
 				}
 			}
 			
-			function createMarker(loc, name) {
-				console.log(loc + " -----> " + name);
+			function createMarker(lat, lng, name) {
+				//create location
+				var loc = new google.maps.LatLng(lat, lng);
+
+				// find distance between marker and user
+				var dist = distance(myLat, myLng, lat, lng)
+				// distance to 3 decimal places
+				dist = Math.round(dist * 1000) / 1000
+
 				var mark = new google.maps.Marker({
 					map: map,
 					position: loc,
-					title: name
+					title: name + " -- " + dist + " miles away"
 				});
-				
-				//mark.setMap(map);
-				
+								
 				// Open info window on click of marker
 				google.maps.event.addListener(mark, 'click', function() {
 					infowindow.close();
 					infowindow.setContent(mark.title);
 					infowindow.open(map, mark);
 				});
+      		}
+
+      		// Given two pairs of lat,lon coordinates, returns the distance
+      		// between the two pairs in miles
+      		// Uses the Haversine formula: 
+      		// http://www.movable-type.co.uk/scripts/latlong.html
+      		// Code borrowed from: 
+      		// http://stackoverflow.com/questions/14560999/using-the-haversine-
+      		// formula-in-javascript (http://bit.ly/1goDPIX)
+      		function distance (lat1, lon1, lat2, lon2) {
+      			Number.prototype.toRad = function() {
+      			   return this * Math.PI / 180;
+      			}
+
+      			var R = 3959; // miles
+      			var x1 = lat2-lat1;
+      			var dLat = x1.toRad();  
+      			var x2 = lon2-lon1;
+      			var dLon = x2.toRad();  
+      			var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+      			                Math.cos(lat1.toRad()) * Math.cos(lat2.toRad()) * 
+      			                Math.sin(dLon/2) * Math.sin(dLon/2);  
+      			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+      			var d = R * c; 
+
+      			return d;
       		}
 		</script>
 	</head>
