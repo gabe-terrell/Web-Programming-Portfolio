@@ -6,7 +6,28 @@
 	<title>Captain's Log</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script>
-	  // Most of your work will be done here...
+
+	$("document").ready(function() {
+		getLocal();
+
+		// Source: http://stackoverflow.com/questions/155188/
+		//		   http://stackoverflow.com/questions/4088467/
+		$("#msg").on("keypress", function(event) {
+			// 13 == 'Enter' Button
+		    if(event.keyCode == 13) {
+		       	input = $('#msg').val();
+		       	$('#log').append("<p>" + input + "</p>");
+		    }
+		});
+	});
+
+	function getLocal () {
+
+	}
+
+	
+	
+
 	</script>
 </head>
 
