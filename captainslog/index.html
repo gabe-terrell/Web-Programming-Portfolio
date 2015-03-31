@@ -25,12 +25,17 @@
 
 		// Source: http://stackoverflow.com/questions/155188/
 		//		   http://stackoverflow.com/questions/4088467/
+		// event listener for input textbox
 		$("#msg").on("keypress", function(event) {
 			// 13 == 'Enter' Button
 		    if(event.keyCode == 13) {
+		    	// grab input from textbox
 		       	input = $('#msg').val();
+		       	// Cut out time zone as it looks less clean
 		       	date = new Date().toString().split("GMT")[0];
+		       	// store new log to localStorage
 		       	store(date, input);
+		       	// Add new message to top of log div
 		       	$('#log').prepend("<p>" + date + "- " + input + "</p>");
 		    }
 		});
