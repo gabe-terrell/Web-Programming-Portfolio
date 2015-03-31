@@ -16,7 +16,8 @@
 			// 13 == 'Enter' Button
 		    if(event.keyCode == 13) {
 		       	input = $('#msg').val();
-		       	$('#log').append("<p>" + input + "</p>");
+		       	date = new Date().toString().split("GMT")[0];
+		       	$('#log').append("<p>" + date + "- " + input + "</p>");
 		    }
 		});
 	});
