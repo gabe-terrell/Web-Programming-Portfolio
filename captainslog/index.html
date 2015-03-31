@@ -7,8 +7,21 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script>
 
+	function store(d, i) {
+		localStorage[d] = i;
+	}
+
+	function getStore() {
+		$('#log').html("");
+		for (key in localStorage) {
+			// filter for random junk in the local store
+			if ((key.search("201") != -1))
+				$('#log').append("<p>" + key + "- " + localStorage[key] + "</p>")
+		}
+	}
+
 	$("document").ready(function() {
-		getLocal();
+		getStore();
 
 		// Source: http://stackoverflow.com/questions/155188/
 		//		   http://stackoverflow.com/questions/4088467/
@@ -17,17 +30,11 @@
 		    if(event.keyCode == 13) {
 		       	input = $('#msg').val();
 		       	date = new Date().toString().split("GMT")[0];
+		       	store(date, input);
 		       	$('#log').append("<p>" + date + "- " + input + "</p>");
 		    }
 		});
 	});
-
-	function getLocal () {
-
-	}
-
-	
-	
 
 	</script>
 </head>
