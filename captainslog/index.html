@@ -16,7 +16,7 @@
 		for (key in localStorage) {
 			// filter for random junk in the local store
 			if ((key.search("201") != -1))
-				$('#log').append("<p>" + key + "- " + localStorage[key] + "</p>")
+				$('#log').prepend("<p>" + key + "- " + localStorage[key] + "</p>")
 		}
 	}
 
@@ -31,7 +31,7 @@
 		       	input = $('#msg').val();
 		       	date = new Date().toString().split("GMT")[0];
 		       	store(date, input);
-		       	$('#log').append("<p>" + date + "- " + input + "</p>");
+		       	$('#log').prepend("<p>" + date + "- " + input + "</p>");
 		    }
 		});
 	});
