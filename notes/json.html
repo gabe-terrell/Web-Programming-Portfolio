@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Messages</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script>
+		// this is the lame JS way... 
+		function runme() {
+			element = document.getElementById("log");
+			element.innerHTML = "<p> We did it! </p>"
+			element.innerHTML += "<p> We did it again! </p>"
+		}
+		// this is the epic json way!
+		// equivalent to onload = "runme()"
+		$("document").ready(awesomerunme);
+
+		function awesomerunme() {
+			$("#log").html("<p> We did it! </p>");
+			$("#log").append("<p> We did it again! </p>");
+
+			// Special Effects!
+			$('h1').click(function highlight() {
+				$('p').each(function() {
+					this.style.backgroundColor = '#FFFF00';
+				});
+			});
+		}
+
+		function xml() {
+			$.ajax({
+				type: 'GET',
+				url: "...",
+				success: function (data) {
+			}});
+		}
+
+		//analagous to...
+		function() {
+			req = new XMLHTTPRequest();
+			//... etc
+		}
+
+	</script>
+</head>
+
+<!-- We don't need <body onload="runme()"> anymore! -->
+<body>
+	<h1>Messages</h1>
+	<div id="log"></div>
+</body>
+</html>

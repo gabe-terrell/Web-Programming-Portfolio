@@ -1,0 +1,12 @@
+{
+	"name": "nodemongoapp",
+	"version": "0.0.1",
+	"dependencies": {
+		"express": "latest",
+		"mongodb": "latest",
+		"body-parser": "latest",
+		"validator":"latest"
+	}
+}
+
+// "name": "simpleexpress" works too...

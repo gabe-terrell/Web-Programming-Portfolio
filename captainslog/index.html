@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>Captain's Log</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script>
+
+	function store(d, i) {
+		localStorage[d] = i;
+	}
+
+	function getStore() {
+		$('#log').html("");
+		for (key in localStorage) {
+			// filter for random junk in the local store
+			if ((key.search("201") != -1))
+				$('#log').prepend("<p>" + key + "- " + localStorage[key] + "</p>")
+		}
+	}
+
+	$("document").ready(function() {
+		getStore();
+
+		// Source: http://stackoverflow.com/questions/155188/
+		//		   http://stackoverflow.com/questions/4088467/
+		// event listener for input textbox
+		$("#msg").on("keypress", function(event) {
+			// 13 == 'Enter' Button
+		    if(event.keyCode == 13) {
+		    	// grab input from textbox
+		       	input = $('#msg').val();
+		       	// Cut out time zone as it looks less clean
+		       	date = new Date().toString().split("GMT")[0];
+		       	// store new log to localStorage
+		       	store(date, input);
+		       	// Add new message to top of log div
+		       	$('#log').prepend("<p>" + date + "- " + input + "</p>");
+		    }
+		});
+	});
+
+	</script>
+</head>
+
+<body>
+	<h1>Captain's Log</h1>
+	<h3>New entry: <input type="text" id="msg" name="msg" size="30" /></h3>
+	<div id="log"></div>
+</body>
+</html>

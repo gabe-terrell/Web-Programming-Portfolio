@@ -1,0 +1,27 @@
+https://dry-escarpment-2586.herokuapp.com/ | https://git.heroku.com/dry-escarpment-2586.git
+
+show databases   // shows all current databases
+show collections //
+use  comp20      // switches to databasename or creates that name if doesnt exist
+
+db.students.insert({"last":"T","first":"G"})  // turns students into a collection
+db.students.find() // shows all elements in the database
+db.students.find({"last":"T","first":"G"})
+
+comp20 is the database, students in the collection
+
+// now lets try doing it with Node.js
+// er = callback function if c-name is not found
+// collection = "Pointer" to collection
+db.collection('c-name', function (er, collection) {
+	var id = collection.insert(JSON-name, function (err, saved) {
+		if (err) {
+			response.send(...)
+		}
+		else {
+			response.send(...)
+		}
+	});
+});
+
+// curl --data "fooditem=Durian" http://localhost:3000/feedme
