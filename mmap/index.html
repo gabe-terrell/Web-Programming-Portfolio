@@ -37,7 +37,7 @@
 					// finds user's latitude and longitude the
 					navigator.geolocation.getCurrentPosition(function(position) {
 						myLat = position.coords.latitude + .00002;
-						myLng = position.coords.longitude - .00002;
+						myLng = position.coords.longitude + .00002;
 						sendMyLocation();
 					});
 				}
@@ -53,7 +53,7 @@
 			function sendMyLocation() {
 				// data to be sent
 				//xhrParams = "login=BenKinsey&lat=" + myLat + "&lng=" + myLng;
-				xhrParams = "login=aStalker&lat=" + myLat + "&lng=" + myLng;
+				xhrParams = "login=RickAstley&lat=" + myLat + "&lng=" + myLng;
 				// Setting up XHR
 				xhr = new XMLHttpRequest();
 				xhr.open("POST", "https://dry-escarpment-2586.herokuapp.com/sendLocation", true);
