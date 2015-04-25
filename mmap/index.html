@@ -53,7 +53,6 @@
 			function sendMyLocation() {
 				// data to be sent
 				xhrParams = "login=BenKinsey&lat=" + myLat + "&lng=" + myLng;
-
 				// Setting up XHR
 				xhr = new XMLHttpRequest();
 				xhr.open("POST", "https://dry-escarpment-2586.herokuapp.com/sendLocation", true);
@@ -101,6 +100,7 @@
 				});
 
 				// Add other students to the map
+				console.log(converted);
 				for (i = 0; i < converted.length; i++) {
 					// Don't add user to the map again
 					if (converted[i]['login'] === "BenKinsey") {
