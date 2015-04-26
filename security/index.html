@@ -44,10 +44,10 @@ Here, a user has posted javascript code as a username. When this code is run, it
 Here, a user has used Data Tamper to change his username from the one designated to him to that of another user. In addition, he has changed the location data he is sending to the server, so that it is no longer the location that geolocation found him at. This is information forgery. </li>
 <li>Solution: There is not necessarily an easy fix with the current system the web application is running on. The key idea to fix this is to create a level of authentication and validation on the server side. For usernames, users of the website could be required to create an account with a username and password. This way, the username would not even be part of the form being sent in the POST request. It would be tied to the account name, and the server would know the account it is serving and getting a post request from. This would bypass the ability for tamper data to mess with username as a form, because it would no longer be one. I am not entirely sure of a fix for geolocation forging, as I believe that is a common issue for many websites in the modern day. Even assuming there was a way to prevent data tamper from messing with geolocation, geolocation itself can be spoofed by a proxy server. </li>
 </ul></li>
-<li><p><strong>Security Flaw 3: The API</strong></p>
+<li><p><strong>Security Flaw 3: TODO</strong></p>
 
 <ul>
-<li>In POST API</li>
+<li>Struggling to find a third flaw -- her code was pretty solid in terms of database requests and form</li>
 
 </ol>
 
