@@ -1,4 +1,4 @@
-## Portfolio for COMP 0020: Introduction to Web Programming ##
+## Portfolio for COMP 20: Introduction to Web Programming ##
 
 This repository is a collection of assignments and laboratories performed over the course of the semester for COMP 20.
 
